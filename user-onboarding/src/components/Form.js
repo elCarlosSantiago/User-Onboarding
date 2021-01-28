@@ -1,28 +1,88 @@
 import react from 'react';
+import styled from 'styled-components';
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-flow: column nowrap;
+  border: 1px solid red;
+  align-items: flex-start;
+
+  input {
+    margin: 1% 0 1% 1%;
+  }
+  label {
+    margin: 1% 0 1% 1%;
+  }
+  select {
+    margin: 0 0 1% 1%;
+  }
+  button {
+    margin: 0 0 1% 1%;
+  }
+`;
 
 export default function Form(props) {
+  const { formValues, change , submit} = props;
+
+  const onChange = (evt) => {
+    const { name, type, checked, value } = evt.target;
+    const valueToUse = type === 'checkbox' ? checked : value;
+    change(name, valueToUse);
+  };
+
+  const onSubmit = (evt) => {
+    evt.preventDefault();
+    submit();
+  };
+
   return (
     <div>
-      <form>
+      <StyledForm onSubmit={onSubmit}>
         <label htmlFor="name">
           Name
-          <input type="text" name="name" />
+          <br />
+          <input
+            type="text"
+            name="name"
+            value={formValues.name}
+            onChange={onChange}
+            placeholder="Full Name"
+          />
         </label>
         <label htmlFor="email">
           E-mail
-          <input type="email" name="email" />
+          <br />
+          <input
+            type="email"
+            name="email"
+            value={formValues.email}
+            onChange={onChange}
+            placeholder="example@mail.com"
+          />
         </label>
         <label htmlFor="password">
           Password
-          <input type="password" name="password" />
+          <br />
+          <input
+            type="password"
+            name="password"
+            value={formValues.password}
+            onChange={onChange}
+            placeholder="Min. 8"
+          />
         </label>
-        <label htmlFor="ToS">
+        <label htmlFor="terms">
           Terms of Service
-          <input type="checkbox" name="ToS" />
+          <input
+            type="checkbox"
+            name="terms"
+            value={formValues.terms}
+            onChange={onChange}
+          />
         </label>
         <label htmlFor="role">
           Role
-          <select>
+          <select name="role" value={formValues.role} onChange={onChange}>
             <option value="">- Select an option -</option>
             <option value="student">Student</option>
             <option value="alumni">Alumni</option>
@@ -30,7 +90,8 @@ export default function Form(props) {
             <option value="Team Lead">Team Lead</option>
           </select>
         </label>
-      </form>
+        <button>Submit!</button>
+      </StyledForm>
     </div>
   );
 }
