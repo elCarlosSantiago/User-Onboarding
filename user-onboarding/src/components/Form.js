@@ -1,10 +1,8 @@
-import react from 'react';
 import styled from 'styled-components';
 
 const StyledForm = styled.form`
   display: flex;
   flex-flow: column nowrap;
-  border: 1px solid red;
   align-items: flex-start;
 
   input {
@@ -21,8 +19,16 @@ const StyledForm = styled.form`
   }
 `;
 
+const StyledErr = styled.div`
+  display: flex;
+  flex-flow: column nowrap;
+  color: red;
+  font-family: monospace;
+  font-size:0.8rem;
+`;
+
 export default function Form(props) {
-  const { formValues, change , submit} = props;
+  const { formValues, change, submit, buttonDisabled, errors } = props;
 
   const onChange = (evt) => {
     const { name, type, checked, value } = evt.target;
@@ -37,6 +43,13 @@ export default function Form(props) {
 
   return (
     <div>
+      <StyledErr>
+        <div>{errors.name}</div>
+        <div>{errors.email}</div>
+        <div>{errors.password}</div>
+        <div>{errors.terms}</div>
+        <div>{errors.role}</div>
+      </StyledErr>
       <StyledForm onSubmit={onSubmit}>
         <label htmlFor="name">
           Name
@@ -90,7 +103,7 @@ export default function Form(props) {
             <option value="Team Lead">Team Lead</option>
           </select>
         </label>
-        <button>Submit!</button>
+        <button disabled={buttonDisabled}>Submit!</button>
       </StyledForm>
     </div>
   );
