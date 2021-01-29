@@ -103,7 +103,7 @@ export default function Form(props) {
             <option value="Team Lead">Team Lead</option>
           </select>
         </label>
-        <button disabled={buttonDisabled}>Submit!</button>
+        <button className ='submitBtn' disabled={buttonDisabled}>Submit!</button>
       </StyledForm>
     </div>
   );
