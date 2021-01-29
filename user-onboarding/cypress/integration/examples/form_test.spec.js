@@ -39,21 +39,26 @@ describe('User Onboarding App', () => {
   it('Can user check terms of service box', () => {
     termsCheckBox().should('exist').check().should('be.checked')
   })
-  it('The user can submit form data', () => {
+  it.only('The user can submit form data and all inputs are cleared', () => {
     submitBtn().should('exist')
     roleMenu().should('exist')
-    nameInput().type('Shrek',{delay:100})
-    emailInput().type('elEhre@gmail.com',{delay:100})
+    nameInput().type('Shrek')
+    emailInput().type('elEhre@gmail.com')
     passwordInput().type('Donkey123')
     termsCheckBox().check()
     roleMenu().select('Team Lead')
     submitBtn().click()
     cy.contains(/Shrek/).should('exist')
+    nameInput().should('not.have.text')
+    emailInput().should('not.have.text')
+    passwordInput().should('not.have.text')
+    roleMenu().should('have.value', '')
+    termsCheckBox().should('not.be.checked')
   })
-  it.only('Checks all messages of form validation', () => {
+  it('Checks all messages of form validation', () => {
       nameInput().type('a').clear()
       cy.contains('Name is required')
-      emailInput().type('a',{delay:100})
+      emailInput().type('a')
       cy.contains('Must be a valid email address.')
       emailInput().clear()
       cy.contains('Must include email address.')

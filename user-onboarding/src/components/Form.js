@@ -90,6 +90,7 @@ export default function Form(props) {
             type="checkbox"
             name="terms"
             value={formValues.terms}
+            checked={formValues.terms}
             onChange={onChange}
           />
         </label>
